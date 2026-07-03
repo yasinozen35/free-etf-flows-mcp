@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spot ETF Flows API & MCP Server - Realtime Institutional Crypto Data</title>
+    <meta name="description" content="Clean, structured, and affordable historical and daily net flow API for Spot Bitcoin and Ethereum ETFs. With native Model Context Protocol (MCP) server support.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom styling with vanilla CSS -->
+    <style>
+        :root {
+            --bg-base: #09090b;
+            --bg-surface: #18181b;
+            --bg-surface-glow: rgba(39, 39, 42, 0.5);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --secondary: #06b6d4;
+            --secondary-glow: rgba(6, 182, 212, 0.15);
+            --border-color: #27272a;
+            --border-glow: rgba(99, 102, 241, 0.3);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Gradients */
+        .ambient-glow-1 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            right: -100px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(9,9,11,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            top: 400px;
+            left: -200px;
+            background: radial-gradient(circle, var(--secondary-glow) 0%, rgba(9,9,11,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header / Nav */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(9, 9, 11, 0.8);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            color: #fff !important;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            box-shadow: 0 4px 14px var(--primary-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 96px 0 64px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4);
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(6, 182, 212, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            max-width: 900px;
+            margin: 0 auto 24px auto;
+            background: linear-gradient(to bottom, #ffffff 40%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            border-color: var(--text-muted);
+        }
+
+        /* Features Cards Grid */
+        .features {
+            padding: 64px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.05);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 24px;
+            font-weight: bold;
+        }
+
+        .card h3 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Interactive Showcase (Code + Demo) */
+        .showcase {
+            padding: 64px 0;
+        }
+
+        .showcase-wrapper {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .code-container {
+            background: #0d0e12;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .code-tabs {
+            display: flex;
+            background: #14161d;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 16px;
+        }
+
+        .code-tab {
+            padding: 14px 18px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .code-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .code-body {
+            padding: 24px;
+            overflow-x: auto;
+        }
+
+        .code-body pre {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+
+        .code-content {
+            display: none;
+        }
+
+        .code-content.active {
+            display: block;
+        }
+
+        .interactive-demo {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            height: 100%;
+        }
+
+        .interactive-demo h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-select:focus, .form-input:focus {
+            border-color: var(--primary);
+        }
+
+        .demo-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary) 0%, #0891b2 100%);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.2s ease;
+        }
+
+        .demo-btn:hover {
+            box-shadow: 0 4px 14px var(--secondary-glow);
+        }
+
+        .demo-btn:active {
+            transform: scale(0.99);
+        }
+
+        .demo-output {
+            margin-top: 24px;
+            background: #0d0e12;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 13px;
+            color: #10b981;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 96px 0;
+            background: linear-gradient(to bottom, transparent, rgba(99, 102, 241, 0.02), transparent);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+            gap: 32px;
+            justify-content: center;
+            margin-top: 48px;
+        }
+
+        .price-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .price-card.popular {
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.08);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-glow);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .price-card h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .price-card .price {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 800;
+            margin: 24px 0;
+        }
+
+        .price-card .price span {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .price-features li {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-features li::before {
+            content: "✓";
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .price-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .price-btn-free {
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .price-btn-free:hover {
+            background: var(--border-color);
+        }
+
+        .price-btn-pro {
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+
+        .price-btn-pro:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 48px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .showcase-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+        }
+    </style>
+
+    <!-- Schema.org JSON-LD Dataset Metadata for LLMO / Search indexing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "Daily Spot Bitcoin and Ethereum ETF Net Flows API",
+      "description": "Clean, structured, and affordable historical and daily net flow data API for Spot Bitcoin and Ethereum ETFs.",
+      "creator": {
+        "@type": "Organization",
+        "name": "ETFFlow"
+      },
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler"
+        }
+      ],
+      "keywords": [
+        "Bitcoin ETF Flows", 
+        "Ethereum ETF Flows", 
+        "Spot ETF Net Flows", 
+        "Farside ETF Scraper", 
+        "Crypto Institutional Data API",
+        "Model Context Protocol ETF Server"
+      ]
+    }
+    </script>
+</head>
+<body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">
+                ETF<span>Flow</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#showcase">Code & Demo</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#pricing" class="btn-primary">Get API Key</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero container">
+        <div class="hero-badge">
+            <span class="pulse"></span> Active Spot ETF Feeds
+        </div>
+        <h1>Instantly Query Institutional Spot BTC & ETH ETF Flows</h1>
+        <p>Bypass anti-bot walls and messy scrapers. Get clean, consolidated net institutional flow data in structured JSON or natively inside your AI workflow using our custom MCP server.</p>
+        <div class="hero-actions">
+            <a href="#pricing" class="btn-primary" style="padding: 14px 28px; font-size: 16px;">Start Fetching Now</a>
+            <a href="#showcase" class="btn-secondary">View Documentation</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features container">
+        <div class="section-header">
+            <h2>Engineered For Algorithmic & AI Workflows</h2>
+            <p>Reliable, structured financial data without the headaches of scrapers or expensive enterprise feeds.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>100% Free Cloudflare Bypass</h3>
+                <p>Built using `curl_cffi` browser SSL/TLS signature impersonation. Absolute, uninterrupted data extraction from primary institutional pages.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>Native MCP Server Support</h3>
+                <p>Add our Model Context Protocol server to your Cursor or Claude Desktop. Let your LLMs query realtime BTC/ETH flows dynamically.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Structured USD Standard</h3>
+                <p>Messy parenthesis formats like '(219.4)' are automatically normalized to negative floating-point numbers in standard USD (-219,400,000.00).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Showcase Section -->
+    <section id="showcase" class="showcase container">
+        <div class="section-header">
+            <h2>Developer & AI Integration</h2>
+            <p>Query using standard REST interfaces or hook up your local AI agent in seconds.</p>
+        </div>
+        <div class="showcase-wrapper">
+            <!-- Code Tab Panel -->
+            <div class="code-container">
+                <div class="code-tabs">
+                    <button class="code-tab active" onclick="switchTab(event, 'curl-code')">cURL</button>
+                    <button class="code-tab" onclick="switchTab(event, 'python-code')">Python</button>
+                    <button class="code-tab" onclick="switchTab(event, 'mcp-config')">Cursor / Claude MCP</button>
+                </div>
+                <div class="code-body">
+                    <div id="curl-code" class="code-content active">
+                        <pre><code>curl -X GET \
+  "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?api_key=YOUR_API_KEY&ticker=BTC&limit=5"</code></pre>
+                    </div>
+                    <div id="python-code" class="code-content">
+                        <pre><code>import requests
+
+url = "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler"
+params = {
+    "api_key": "YOUR_API_KEY",
+    "ticker": "BTC",
+    "limit": 5
+}
+response = requests.get(url, params=params)
+data = response.json()
+print(data)</code></pre>
+                    </div>
+                    <div id="mcp-config" class="code-content">
+                        <pre><code>// Add to your Claude Desktop Config or Cursor MCP settings:
+{
+  "mcpServers": {
+    "etf-flows": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/absolute/path/to/free-etf-flows-mcp",
+        "run",
+        "python",
+        "mcp_server.py"
+      ],
+      "env": {
+        "ETF_FLOWS_API_KEY": "YOUR_PRO_API_KEY_HERE"
+      }
+    }
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Playground -->
+            <div class="interactive-demo">
+                <h3>Live Playground</h3>
+                <div class="form-group">
+                    <label for="demo-ticker">Asset Ticker</label>
+                    <select id="demo-ticker" class="form-select">
+                        <option value="BTC">Bitcoin (BTC)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="">Both (Consolidated)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="demo-key">API Key</label>
+                    <input type="text" id="demo-key" class="form-input" placeholder="demo-key-99999 (Default Restricted preview)" value="demo-key-99999">
+                </div>
+                <button class="demo-btn" onclick="runDemo()">Execute API Request</button>
+                <div id="demo-output-container" style="display:none;">
+                    <div class="demo-output" id="demo-output">Executing...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Extremely Affordable Developer Plans</h2>
+                <p>Save weeks of engineering and hosting costs for the price of a cup of coffee.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="price-card">
+                    <h3>Free Preview</h3>
+                    <div class="price">$0<span>/lifetime</span></div>
+                    <ul class="price-features">
+                        <li>Maximum 3 records returned</li>
+                        <li>1-day data delay applied</li>
+                        <li>Rate limit: 10 requests / minute</li>
+                        <li>Perfect for initial local integration</li>
+                    </ul>
+                    <a href="#showcase" class="price-btn price-btn-free" onclick="useDemoKey()">Try Preview Mode</a>
+                </div>
+                
+                <!-- Pro Plan -->
+                <div class="price-card popular">
+                    <div class="price-badge">POPULAR</div>
+                    <h3>Pro Developer</h3>
+                    <div class="price">$9.99<span>/month</span></div>
+                    <ul class="price-features">
+                        <li>Unlimited historical records</li>
+                        <li>Realtime updates (0-day delay)</li>
+                        <li>Rate limit: 60 requests / minute</li>
+                        <li>Standard REST API + MCP Server access</li>
+                        <li>Active institutional BTC & ETH feeds</li>
+                    </ul>
+                    <!-- Replace URL with your Lemon Squeezy checkout link -->
+                    <a href="https://yourbrand.lemonsqueezy.com/checkout" class="price-btn price-btn-pro" target="_blank">Subscribe to Pro Tier</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ETFFlow. All rights reserved. Realtime financial metadata parsed securely from official source pages.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JS scripts for Tabs and live playground -->
+    <script>
+        function switchTab(evt, tabId) {
+            const contents = document.getElementsByClassName("code-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+            const tabs = document.getElementsByClassName("code-tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function useDemoKey() {
+            document.getElementById("demo-key").value = "demo-key-99999";
+            document.getElementById("showcase").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function runDemo() {
+            const ticker = document.getElementById("demo-ticker").value;
+            const key = document.getElementById("demo-key").value;
+            const outputContainer = document.getElementById("demo-output-container");
+            const output = document.getElementById("demo-output");
+
+            outputContainer.style.display = "block";
+            output.innerText = "Executing request...";
+
+            let url = `https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?api_key=${key}`;
+            if (ticker) {
+                url += `&ticker=${ticker}`;
+            }
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                output.innerText = JSON.stringify(data, null, 2);
+            } catch (err) {
+                output.innerText = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
