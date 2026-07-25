@@ -4,7 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spot ETF Flows API & MCP Server - Realtime Institutional Crypto Data</title>
-    <meta name="description" content="Clean, structured, and affordable historical and daily net flow API for Spot Bitcoin and Ethereum ETFs. With native Model Context Protocol (MCP) server support.">
+    
+    <!-- Technical SEO & AI Search Optimization (LLMO) -->
+    <meta name="description" content="Clean, structured, and affordable historical and daily net flow API for Spot Bitcoin and Ethereum ETFs. Native Model Context Protocol (MCP) server support for Cursor and Claude Desktop.">
+    <meta name="keywords" content="Bitcoin ETF Flows, Ethereum ETF Flows, Spot ETF Net Flows, Farside ETF Scraper, Crypto Institutional Data API, Model Context Protocol ETF Server, Cursor MCP Server, Bitcoin Flow API">
+    <meta name="author" content="Yasin Özen">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://yasinozen35.github.io/free-etf-flows-mcp/">
+    
+    <!-- AI Crawlers Standard (llms.txt) Reference -->
+    <link rel="alternate" type="text/plain" href="llms.txt" title="LLM Context Information">
+    
+    <!-- Open Graph (Social Cards & AI Link Previews for ChatGPT / Claude) -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Spot ETF Flows API & MCP Server - Realtime Institutional Crypto Data">
+    <meta property="og:description" content="Consolidated, normalized, and historical daily net flow data for Spot Bitcoin (BTC) and Spot Ethereum (ETH) ETFs. Zero Cloudflare friction. Instant AI integration.">
+    <meta property="og:url" content="https://yasinozen35.github.io/free-etf-flows-mcp/">
+    <meta property="og:site_name" content="ETFFlow by Yasin Özen">
+    
+    <!-- Twitter Cards (Perplexity, X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Spot ETF Flows API & MCP Server - Realtime Institutional Crypto Data">
+    <meta name="twitter:description" content="Structured Spot Bitcoin & Ethereum ETF flows API. Clean JSON data with zero anti-bot walls. Ready for Cursor & Claude.">
+
+    <!-- Schema.org Multi-Entity JSON-LD (Dataset + WebAPI + SoftwareApplication + FAQPage) -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "@id": "https://yasinozen35.github.io/free-etf-flows-mcp/#dataset",
+        "name": "Daily Spot Bitcoin and Ethereum ETF Net Flows API",
+        "description": "Consolidated, normalized, and historical daily net flow data for Spot Bitcoin (BTC) and Spot Ethereum (ETH) ETFs. Features automatic conversion of negative flow formats.",
+        "url": "https://yasinozen35.github.io/free-etf-flows-mcp/",
+        "sameAs": "https://github.com/yasinozen35/free-etf-flows-mcp",
+        "keywords": [
+          "Bitcoin ETF Flows", 
+          "Ethereum ETF Flows", 
+          "Spot ETF Net Flows", 
+          "Farside ETF Flows", 
+          "Crypto Institutional Flows",
+          "Model Context Protocol ETF Server"
+        ],
+        "creator": {
+          "@type": "Person",
+          "name": "Yasin Özen",
+          "email": "yasinozen35@gmail.com"
+        },
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "temporalCoverage": "2024-01-11/..",
+        "spatialCoverage": "US",
+        "distribution": [
+          {
+            "@type": "DataDownload",
+            "encodingFormat": "application/json",
+            "contentUrl": "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebAPI",
+        "name": "Spot ETF Flows REST API & MCP Service",
+        "description": "A secure REST API and Model Context Protocol (MCP) server providing institutional cryptocurrency ETF data.",
+        "documentation": "https://github.com/yasinozen35/free-etf-flows-mcp",
+        "provider": {
+          "@type": "Person",
+          "name": "Yasin Özen"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Free Spot ETF Flows MCP Server",
+        "operatingSystem": "Cross-platform (macOS, Windows, Linux)",
+        "applicationCategory": "DeveloperApplication",
+        "downloadUrl": "https://github.com/yasinozen35/free-etf-flows-mcp",
+        "softwareRequirements": "Python >= 3.10, uv"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I query Spot Bitcoin ETF flows using Python or cURL?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can send a GET request to https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?api_key=YOUR_KEY&ticker=BTC to retrieve structured JSON data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I connect ETF flow data to Cursor or Claude Desktop using MCP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Add the free-etf-flows-mcp server to your MCP config using `uv --directory /path/to/free-etf-flows-mcp run python mcp_server.py`. Set the ETF_FLOWS_API_KEY environment variable for Pro access."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the update frequency of Spot ETF net flow data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ETF flow data is updated daily right after US market close (around 23:00 UTC) as fund managers release official creation and redemption reports."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -556,6 +666,40 @@
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
         }
 
+        /* FAQ Section for AI Search Engine Direct Answers */
+        .faq-section {
+            padding: 64px 0 96px 0;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+        }
+
+        .faq-item h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .faq-item p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
         /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
@@ -575,35 +719,6 @@
             }
         }
     </style>
-
-    <!-- Schema.org JSON-LD Dataset Metadata for LLMO / Search indexing -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Dataset",
-      "name": "Daily Spot Bitcoin and Ethereum ETF Net Flows API",
-      "description": "Clean, structured, and affordable historical and daily net flow data API for Spot Bitcoin and Ethereum ETFs.",
-      "creator": {
-        "@type": "Organization",
-        "name": "ETFFlow"
-      },
-      "distribution": [
-        {
-          "@type": "DataDownload",
-          "encodingFormat": "application/json",
-          "contentUrl": "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler"
-        }
-      ],
-      "keywords": [
-        "Bitcoin ETF Flows", 
-        "Ethereum ETF Flows", 
-        "Spot ETF Net Flows", 
-        "Farside ETF Scraper", 
-        "Crypto Institutional Data API",
-        "Model Context Protocol ETF Server"
-      ]
-    }
-    </script>
 </head>
 <body>
 
@@ -616,74 +731,79 @@
             <div class="logo">
                 ETF<span>Flow</span>
             </div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#showcase">Code & Demo</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#pricing" class="btn-primary">Get API Key</a></li>
-            </ul>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#showcase">Code & Demo</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#pricing" class="btn-primary">Get API Key</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero container">
-        <div class="hero-badge">
-            <span class="pulse"></span> Active Spot ETF Feeds
-        </div>
-        <h1>Instantly Query Institutional Spot BTC & ETH ETF Flows</h1>
-        <p>Bypass anti-bot walls and messy scrapers. Get clean, consolidated net institutional flow data in structured JSON or natively inside your AI workflow using our custom MCP server.</p>
-        <div class="hero-actions">
-            <a href="#pricing" class="btn-primary" style="padding: 14px 28px; font-size: 16px;">Start Fetching Now</a>
-            <a href="#showcase" class="btn-secondary">View Documentation</a>
-        </div>
-    </section>
+    <!-- Main Content Area -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero container">
+            <div class="hero-badge">
+                <span class="pulse"></span> Active Spot ETF Feeds
+            </div>
+            <h1>Instantly Query Institutional Spot BTC & ETH ETF Flows</h1>
+            <p>Bypass anti-bot walls and messy scrapers. Get clean, consolidated net institutional flow data in structured JSON or natively inside your AI workflow using our custom MCP server.</p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn-primary" style="padding: 14px 28px; font-size: 16px;">Start Fetching Now</a>
+                <a href="#showcase" class="btn-secondary">View Documentation</a>
+            </div>
+        </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features container">
-        <div class="section-header">
-            <h2>Engineered For Algorithmic & AI Workflows</h2>
-            <p>Reliable, structured financial data without the headaches of scrapers or expensive enterprise feeds.</p>
-        </div>
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>100% Free Cloudflare Bypass</h3>
-                <p>Built using `curl_cffi` browser SSL/TLS signature impersonation. Absolute, uninterrupted data extraction from primary institutional pages.</p>
+        <!-- Features Section -->
+        <section id="features" class="features container">
+            <div class="section-header">
+                <h2>Engineered For Algorithmic & AI Workflows</h2>
+                <p>Reliable, structured financial data without the headaches of scrapers or expensive enterprise feeds.</p>
             </div>
-            <div class="card">
-                <div class="card-icon">🤖</div>
-                <h3>Native MCP Server Support</h3>
-                <p>Add our Model Context Protocol server to your Cursor or Claude Desktop. Let your LLMs query realtime BTC/ETH flows dynamically.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📊</div>
-                <h3>Structured USD Standard</h3>
-                <p>Messy parenthesis formats like '(219.4)' are automatically normalized to negative floating-point numbers in standard USD (-219,400,000.00).</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Showcase Section -->
-    <section id="showcase" class="showcase container">
-        <div class="section-header">
-            <h2>Developer & AI Integration</h2>
-            <p>Query using standard REST interfaces or hook up your local AI agent in seconds.</p>
-        </div>
-        <div class="showcase-wrapper">
-            <!-- Code Tab Panel -->
-            <div class="code-container">
-                <div class="code-tabs">
-                    <button class="code-tab active" onclick="switchTab(event, 'curl-code')">cURL</button>
-                    <button class="code-tab" onclick="switchTab(event, 'python-code')">Python</button>
-                    <button class="code-tab" onclick="switchTab(event, 'mcp-config')">Cursor / Claude MCP</button>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>100% Free Cloudflare Bypass</h3>
+                    <p>Built using `curl_cffi` browser SSL/TLS signature impersonation. Absolute, uninterrupted data extraction from primary institutional pages.</p>
                 </div>
-                <div class="code-body">
-                    <div id="curl-code" class="code-content active">
-                        <pre><code>curl -X GET \
-  "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?api_key=YOUR_API_KEY&ticker=BTC&limit=5"</code></pre>
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>Native MCP Server Support</h3>
+                    <p>Add our Model Context Protocol server to your Cursor or Claude Desktop. Let your LLMs query realtime BTC/ETH flows dynamically.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Structured USD Standard</h3>
+                    <p>Messy parenthesis formats like '(219.4)' are automatically normalized to negative floating-point numbers in standard USD (-219,400,000.00).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Showcase Section -->
+        <section id="showcase" class="showcase container">
+            <div class="section-header">
+                <h2>Developer & AI Integration</h2>
+                <p>Query using standard REST interfaces or hook up your local AI agent in seconds.</p>
+            </div>
+            <div class="showcase-wrapper">
+                <!-- Code Tab Panel -->
+                <div class="code-container">
+                    <div class="code-tabs">
+                        <button class="code-tab active" onclick="switchTab(event, 'curl-code')">cURL</button>
+                        <button class="code-tab" onclick="switchTab(event, 'python-code')">Python</button>
+                        <button class="code-tab" onclick="switchTab(event, 'mcp-config')">Cursor / Claude MCP</button>
                     </div>
-                    <div id="python-code" class="code-content">
-                        <pre><code>import requests
+                    <div class="code-body">
+                        <div id="curl-code" class="code-content active">
+                            <pre><code>curl -X GET \
+  "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?api_key=YOUR_API_KEY&ticker=BTC&limit=5"</code></pre>
+                        </div>
+                        <div id="python-code" class="code-content">
+                            <pre><code>import requests
 
 url = "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler"
 params = {
@@ -694,9 +814,9 @@ params = {
 response = requests.get(url, params=params)
 data = response.json()
 print(data)</code></pre>
-                    </div>
-                    <div id="mcp-config" class="code-content">
-                        <pre><code>// Add to your Claude Desktop Config or Cursor MCP settings:
+                        </div>
+                        <div id="mcp-config" class="code-content">
+                            <pre><code>// Add to your Claude Desktop Config or Cursor MCP settings:
 {
   "mcpServers": {
     "etf-flows": {
@@ -714,77 +834,99 @@ print(data)</code></pre>
     }
   }
 }</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Playground -->
+                <div class="interactive-demo">
+                    <h3>Live Playground</h3>
+                    <div class="form-group">
+                        <label for="demo-ticker">Asset Ticker</label>
+                        <select id="demo-ticker" class="form-select">
+                            <option value="BTC">Bitcoin (BTC)</option>
+                            <option value="ETH">Ethereum (ETH)</option>
+                            <option value="">Both (Consolidated)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="demo-key">API Key</label>
+                        <input type="text" id="demo-key" class="form-input" placeholder="demo-key-99999 (Default Restricted preview)" value="demo-key-99999">
+                    </div>
+                    <button class="demo-btn" onclick="runDemo()">Execute API Request</button>
+                    <div id="demo-output-container" style="display:none;">
+                        <div class="demo-output" id="demo-output">Executing...</div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Demo Playground -->
-            <div class="interactive-demo">
-                <h3>Live Playground</h3>
-                <div class="form-group">
-                    <label for="demo-ticker">Asset Ticker</label>
-                    <select id="demo-ticker" class="form-select">
-                        <option value="BTC">Bitcoin (BTC)</option>
-                        <option value="ETH">Ethereum (ETH)</option>
-                        <option value="">Both (Consolidated)</option>
-                    </select>
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Extremely Affordable Developer Plans</h2>
+                    <p>Save weeks of engineering and hosting costs for the price of a cup of coffee.</p>
                 </div>
-                <div class="form-group">
-                    <label for="demo-key">API Key</label>
-                    <input type="text" id="demo-key" class="form-input" placeholder="demo-key-99999 (Default Restricted preview)" value="demo-key-99999">
-                </div>
-                <button class="demo-btn" onclick="runDemo()">Execute API Request</button>
-                <div id="demo-output-container" style="display:none;">
-                    <div class="demo-output" id="demo-output">Executing...</div>
+                <div class="pricing-grid">
+                    <!-- Free Plan -->
+                    <div class="price-card">
+                        <h3>Free Preview</h3>
+                        <div class="price">$0<span>/lifetime</span></div>
+                        <ul class="price-features">
+                            <li>Maximum 3 records returned</li>
+                            <li>1-day data delay applied</li>
+                            <li>Rate limit: 10 requests / minute</li>
+                            <li>Perfect for initial local integration</li>
+                        </ul>
+                        <a href="#showcase" class="price-btn price-btn-free" onclick="useDemoKey()">Try Preview Mode</a>
+                    </div>
+                    
+                    <!-- Pro Plan -->
+                    <div class="price-card popular">
+                        <div class="price-badge">POPULAR</div>
+                        <h3>Pro Developer</h3>
+                        <div class="price">$9.99<span>/month</span></div>
+                        <ul class="price-features">
+                            <li>Unlimited historical records</li>
+                            <li>Realtime updates (0-day delay)</li>
+                            <li>Rate limit: 60 requests / minute</li>
+                            <li>Standard REST API + MCP Server access</li>
+                            <li>Active institutional BTC & ETH feeds</li>
+                        </ul>
+                        <a href="https://yasinozen.lemonsqueezy.com/checkout" class="price-btn price-btn-pro" target="_blank" rel="noopener">Subscribe to Pro Tier</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-        <div class="container">
+        <!-- FAQ Section (AI Engine Extraction Target) -->
+        <section id="faq" class="faq-section container">
             <div class="section-header">
-                <h2>Extremely Affordable Developer Plans</h2>
-                <p>Save weeks of engineering and hosting costs for the price of a cup of coffee.</p>
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about our ETF flow API and MCP server.</p>
             </div>
-            <div class="pricing-grid">
-                <!-- Free Plan -->
-                <div class="price-card">
-                    <h3>Free Preview</h3>
-                    <div class="price">$0<span>/lifetime</span></div>
-                    <ul class="price-features">
-                        <li>Maximum 3 records returned</li>
-                        <li>1-day data delay applied</li>
-                        <li>Rate limit: 10 requests / minute</li>
-                        <li>Perfect for initial local integration</li>
-                    </ul>
-                    <a href="#showcase" class="price-btn price-btn-free" onclick="useDemoKey()">Try Preview Mode</a>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>How do I query Spot Bitcoin ETF flows using Python or cURL?</h3>
+                    <p>Send a standard GET request to <code>https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?api_key=YOUR_KEY&amp;ticker=BTC</code>. You will receive structured JSON with flow date, ticker symbol, and USD net flow amounts.</p>
                 </div>
-                
-                <!-- Pro Plan -->
-                <div class="price-card popular">
-                    <div class="price-badge">POPULAR</div>
-                    <h3>Pro Developer</h3>
-                    <div class="price">$9.99<span>/month</span></div>
-                    <ul class="price-features">
-                        <li>Unlimited historical records</li>
-                        <li>Realtime updates (0-day delay)</li>
-                        <li>Rate limit: 60 requests / minute</li>
-                        <li>Standard REST API + MCP Server access</li>
-                        <li>Active institutional BTC & ETH feeds</li>
-                    </ul>
-                    <!-- Replace URL with your Lemon Squeezy checkout link -->
-                    <a href="https://yourbrand.lemonsqueezy.com/checkout" class="price-btn price-btn-pro" target="_blank">Subscribe to Pro Tier</a>
+                <div class="faq-item">
+                    <h3>How do I connect ETF flow data to Cursor or Claude Desktop using MCP?</h3>
+                    <p>Clone our public repository <code>https://github.com/yasinozen35/free-etf-flows-mcp</code>, configure your MCP setting using <code>uv --directory /path/to/free-etf-flows-mcp run python mcp_server.py</code>, and pass your <code>ETF_FLOWS_API_KEY</code> environment variable.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is the update frequency of Spot ETF net flow data?</h3>
+                    <p>ETF flow data is updated daily right after US market close (around 23:00 UTC) as institutional fund managers release official creation and redemption balance reports.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 ETFFlow. All rights reserved. Realtime financial metadata parsed securely from official source pages.</p>
+            <p>&copy; 2026 ETFFlow by Yasin Özen. All rights reserved. Realtime financial metadata parsed securely from official source pages.</p>
         </div>
     </footer>
 

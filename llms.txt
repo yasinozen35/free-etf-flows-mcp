@@ -1,0 +1,35 @@
+# Spot ETF Flows API & MCP Server
+
+> Clean, structured, and affordable historical and daily net flow API for Spot Bitcoin (BTC) and Ethereum (ETH) ETFs. Features native Model Context Protocol (MCP) server support for AI agents (Cursor, Claude Desktop, Windsurf).
+
+## Overview
+- **Data Source**: Consolidated institutional ETF flow pages (normalized from raw tables).
+- **Supported Assets**: Spot Bitcoin ETFs (IBIT, FBTC, GBTC, etc.) and Spot Ethereum ETFs (ETHA, FETH, ETHE, etc.).
+- **Data Format**: Standardized USD floating-point values (e.g. `(219.4)` million is normalized to `-219400000.00`).
+- **Update Frequency**: Daily (runs automatically after US market close at 23:00 UTC).
+
+## API Endpoints & Interfaces
+
+### 1. REST API
+- **Endpoint**: `https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler`
+- **HTTP Method**: `GET`
+- **Query Parameters**:
+  - `api_key` (string, optional): Your Pro API Key. If omitted, operates in Limited Preview Mode.
+  - `ticker` (string, optional): `'BTC'` or `'ETH'`. Omit to get consolidated BTC and ETH records.
+  - `limit` (integer, optional): Number of rows to return (default: 30, max: 1000).
+
+### 2. Model Context Protocol (MCP) Server
+- **Repository**: `https://github.com/yasinozen35/free-etf-flows-mcp`
+- **Execution Command**: `uv --directory /path/to/free-etf-flows-mcp run python mcp_server.py`
+- **MCP Tools Available**:
+  - `get_latest_etf_flows(ticker: str = "BTC") -> str`
+  - `query_etf_flows_by_date_range(start_date: str, end_date: str, ticker: str = None) -> str`
+
+## Tiers & Access Levels
+- **Free Preview Tier**: Returns maximum 3 latest records with 1-day data delay. Rate limit: 10 requests/minute.
+- **Pro Tier ($9.99/mo)**: Unlimited historical records, 0-day realtime delay, rate limit: 60 requests/minute.
+
+## Key Links & Resources
+- **Website**: https://yasinozen35.github.io/free-etf-flows-mcp/
+- **GitHub Repository**: https://github.com/yasinozen35/free-etf-flows-mcp
+- **Subscribe to Pro**: https://yasinozen.lemonsqueezy.com/checkout
