@@ -83,4 +83,4 @@ Once connected, your AI assistant will have access to the following tools:
 ## 💳 Get a Pro API Key
 To unlock unlimited historical data, real-time updates (0-day delay), and higher rate limits, purchase a Pro Developer key from our website:
 
-👉 **[Get Pro API Key (Only $9.99/mo)](https://yasinozen35.github.io/ETFFlow/)** (hosted via Lemon Squeezy).
+👉 **[Get Pro API Key](https://www.shopier.com/ysnzn/49360250)** or visit our website **[https://yasinozen35.github.io/free-etf-flows-mcp/](https://yasinozen35.github.io/free-etf-flows-mcp/)**.
