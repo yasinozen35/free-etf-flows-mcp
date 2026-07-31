@@ -1,5 +1,13 @@
 # Free Spot ETF Flows MCP Server
 
+[![API Status](https://img.shields.io/badge/API-Active%20%26%20Live-10b981?style=for-the-badge&logo=supabase)](https://yasinozen35.github.io/free-etf-flows-mcp/)
+[![MCP Support](https://img.shields.io/badge/MCP-Native%20Support-6366f1?style=for-the-badge&logo=python)](https://github.com/yasinozen35/free-etf-flows-mcp)
+[![OpenAPI Spec](https://img.shields.io/badge/OpenAPI-3.0-06b6d4?style=for-the-badge&logo=openapi-initiative)](openapi.json)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
+🌐 **Live Documentation & Website:** [https://yasinozen35.github.io/free-etf-flows-mcp/](https://yasinozen35.github.io/free-etf-flows-mcp/)  
+📄 **OpenAPI 3.0 Specification:** [openapi.json](openapi.json)
+
 This is an open-source Model Context Protocol (MCP) server that connects your AI assistants (like Claude Desktop, Cursor, Windsurf) to Spot Bitcoin (BTC) and Ethereum (ETH) institutional net flow data. 
 
 It fetches clean, normalized data directly from the consolidated institutional data feeds, bypassing messy scrape formats.

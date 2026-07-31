@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Spot ETF Flows API",
+    "description": "Consolidated, normalized, daily net flow API for Spot Bitcoin (BTC) and Spot Ethereum (ETH) ETFs.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Yasin Özen",
+      "email": "yasinozen35@gmail.com",
+      "url": "https://yasinozen35.github.io/free-etf-flows-mcp/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1",
+      "description": "Production Supabase Edge Functions Server"
+    }
+  ],
+  "paths": {
+    "/smooth-handler": {
+      "get": {
+        "summary": "Fetch Spot ETF Net Flow Data",
+        "description": "Retrieves daily net inflow and outflow metrics for Spot Bitcoin and Ethereum ETFs in normalized USD float values.",
+        "operationId": "getEtfFlows",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "query",
+            "required": false,
+            "description": "Your personal API Key. If omitted, response operates in Limited Preview Mode.",
+            "schema": {
+              "type": "string",
+              "example": "etf_abc123xyz"
+            }
+          },
+          {
+            "name": "ticker",
+            "in": "query",
+            "required": false,
+            "description": "Filter by ETF symbol ('BTC' or 'ETH'). If omitted, returns both.",
+            "schema": {
+              "type": "string",
+              "enum": ["BTC", "ETH"],
+              "example": "BTC"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of daily flow records to return.",
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "maximum": 1000,
+              "example": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response containing ETF flow records.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean", "example": true },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "tier": { "type": "string", "example": "pro" },
+                        "subscription_status": { "type": "string", "example": "active" },
+                        "restricted_mode": { "type": "boolean", "example": false }
+                      }
+                    },
+                    "count": { "type": "integer", "example": 1 },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "flow_date": { "type": "string", "format": "date", "example": "2026-07-28" },
+                          "ticker": { "type": "string", "example": "BTC" },
+                          "net_flow_usd": { "type": "number", "example": 154200000.00 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

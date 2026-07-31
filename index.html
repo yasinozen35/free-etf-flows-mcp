@@ -757,6 +757,28 @@
                 <a href="#pricing" class="btn-primary" style="padding: 14px 28px; font-size: 16px;">Start Fetching Now</a>
                 <a href="#showcase" class="btn-secondary">View Documentation</a>
             </div>
+
+            <!-- Live ETF Ticker Widget -->
+            <div class="live-ticker-card" style="margin-top: 48px; max-width: 650px; margin-left: auto; margin-right: auto; background: rgba(24, 24, 27, 0.8); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; text-align: left; backdrop-filter: blur(12px);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+                        <span class="pulse"></span> LIVE INSTITUTIONAL ETF FLOW STREAM
+                    </div>
+                    <span style="font-size: 12px; color: var(--text-muted); font-family: monospace;" id="live-updated-time">Verified Feed</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="background: #09090b; border: 1px solid #27272a; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 12px; color: #a1a1aa; margin-bottom: 4px; font-weight: 600;">Spot Bitcoin (BTC) Net Flow</div>
+                        <div style="font-size: 22px; font-weight: 800; color: #10b981; font-family: 'Outfit', sans-serif;" id="btc-flow-val">+$154.20M</div>
+                        <div style="font-size: 11px; color: #71717a; margin-top: 4px;" id="btc-date-val">Daily US Close</div>
+                    </div>
+                    <div style="background: #09090b; border: 1px solid #27272a; border-radius: 12px; padding: 16px;">
+                        <div style="font-size: 12px; color: #a1a1aa; margin-bottom: 4px; font-weight: 600;">Spot Ethereum (ETH) Net Flow</div>
+                        <div style="font-size: 22px; font-weight: 800; color: #06b6d4; font-family: 'Outfit', sans-serif;" id="eth-flow-val">+$48.50M</div>
+                        <div style="font-size: 11px; color: #71717a; margin-top: 4px;" id="eth-date-val">Daily US Close</div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Features Section -->
