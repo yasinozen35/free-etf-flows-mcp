@@ -995,6 +995,47 @@ print(data)</code></pre>
                 output.innerText = "Error: " + err.message;
             }
         }
+
+        async function fetchLiveTickerData() {
+            try {
+                const res = await fetch("https://ubzimdhjaqeirdhhwzug.supabase.co/functions/v1/smooth-handler?limit=10");
+                const json = await res.json();
+                if (json && json.data && json.data.length > 0) {
+                    const btcData = json.data.find(d => d.ticker === 'BTC');
+                    const ethData = json.data.find(d => d.ticker === 'ETH');
+
+                    if (btcData) {
+                        const val = btcData.net_flow_usd;
+                        const formatted = (val >= 0 ? '+' : '-') + '$' + Math.abs(val / 1000000).toFixed(2) + 'M';
+                        const el = document.getElementById("btc-flow-val");
+                        if (el) {
+                            el.innerText = formatted;
+                            el.style.color = val >= 0 ? "#10b981" : "#ef4444";
+                        }
+                        const dateEl = document.getElementById("btc-date-val");
+                        if (dateEl) dateEl.innerText = `Flow Date: ${btcData.flow_date}`;
+                    }
+
+                    if (ethData) {
+                        const val = ethData.net_flow_usd;
+                        const formatted = (val >= 0 ? '+' : '-') + '$' + Math.abs(val / 1000000).toFixed(2) + 'M';
+                        const el = document.getElementById("eth-flow-val");
+                        if (el) {
+                            el.innerText = formatted;
+                            el.style.color = val >= 0 ? "#10b981" : "#ef4444";
+                        }
+                        const dateEl = document.getElementById("eth-date-val");
+                        if (dateEl) dateEl.innerText = `Flow Date: ${ethData.flow_date}`;
+                    }
+
+                    const timeEl = document.getElementById("live-updated-time");
+                    if (timeEl) timeEl.innerText = "Live Verified Feed";
+                }
+            } catch (e) {
+                console.log("Ticker update fallback:", e);
+            }
+        }
+        window.addEventListener("DOMContentLoaded", fetchLiveTickerData);
     </script>
 </body>
 </html>
