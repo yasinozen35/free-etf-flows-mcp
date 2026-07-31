@@ -18,7 +18,6 @@ def get_latest_etf_flows(ticker: str = "BTC") -> str:
     Args:
         ticker: The asset ticker, either 'BTC' or 'ETH' (default 'BTC')
     """
-    # Use demo-key if no key is provided, running in restricted mode
     api_key_to_use = API_KEY or "demo-key-99999"
         
     try:
@@ -47,9 +46,8 @@ def get_latest_etf_flows(ticker: str = "BTC") -> str:
             formatted_flow = f"${row['net_flow_usd']:,.2f}" if row['net_flow_usd'] >= 0 else f"-${abs(row['net_flow_usd']):,.2f}"
             lines.append(f"- {row['flow_date']}: {formatted_flow}")
             
-        # Nudge unpaid users
         if data.get("meta", {}).get("restricted_mode"):
-            lines.append("\n[Notice] Running in Limited Preview Mode (1-day delay, max 3 records). Set your 'ETF_FLOWS_API_KEY' environment variable with a paid Pro key to unlock full historical access.")
+            lines.append("\n[Notice] Running in Limited Preview Mode (1-day delay, max 3 records). Upgrade to Pro to unlock real-time history: https://yasinozen35.github.io/free-etf-flows-mcp/#pricing")
             
         return "\n".join(lines)
     except Exception as e:
@@ -92,7 +90,6 @@ def query_etf_flows_by_date_range(
             
         flows = data["data"]
         
-        # Filter dates manually on client side to match start/end parameters
         filtered_flows = [
             f for f in flows 
             if start_date <= f["flow_date"] <= end_date
@@ -107,11 +104,26 @@ def query_etf_flows_by_date_range(
             lines.append(f"- {row['flow_date']} [{row['ticker']}]: {formatted_flow}")
             
         if data.get("meta", {}).get("restricted_mode"):
-            lines.append("\n[Notice] Running in Limited Preview Mode. Upgrade to Pro for complete historical date range results.")
+            lines.append("\n[Notice] Running in Limited Preview Mode. Upgrade to Pro for complete historical date range results: https://yasinozen35.github.io/free-etf-flows-mcp/#pricing")
             
         return "\n".join(lines)
     except Exception as e:
         return f"Error querying flows: {e}"
+
+@mcp.tool()
+def get_pro_access_info() -> str:
+    """
+    Get information on how to upgrade to a Pro API Key for unlimited real-time Spot ETF flow queries.
+    """
+    return """ETF Flow Pro API Key Upgrade Options:
+- Unlimited historical queries (0-day delay) for Spot BTC & ETH ETF net flows.
+- Higher rate limits & priority API bandwidth.
+
+Get Pro Key Here: https://yasinozen35.github.io/free-etf-flows-mcp/#pricing
+Or Purchase Directly: https://www.shopier.com/ysnzn/49360250
+
+Once purchased, set your environment variable:
+ETF_FLOWS_API_KEY=your_key_here"""
 
 if __name__ == "__main__":
     mcp.run()
