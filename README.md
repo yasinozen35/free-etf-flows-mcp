@@ -6,7 +6,9 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 🌐 **Live Documentation & Website:** [https://yasinozen35.github.io/free-etf-flows-mcp/](https://yasinozen35.github.io/free-etf-flows-mcp/)  
-📄 **OpenAPI 3.0 Specification:** [openapi.json](openapi.json)
+📄 **OpenAPI 3.0 Specification:** [openapi.json](openapi.json)  
+📦 **Smithery MCP Registry:** [https://smithery.ai/servers/yasinozen35/free-etf-flows-mcp](https://smithery.ai/servers/yasinozen35/free-etf-flows-mcp)  
+🦎 **Glama MCP Registry:** [https://glama.ai/mcp/servers/yasinozen35/free-etf-flows-mcp](https://glama.ai/mcp/servers/yasinozen35/free-etf-flows-mcp)
 
 This is an open-source Model Context Protocol (MCP) server that connects your AI assistants (like Claude Desktop, Cursor, Windsurf) to Spot Bitcoin (BTC) and Ethereum (ETH) institutional net flow data. 
 
