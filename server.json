@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.yasinozen/etf-flows",
   "title": "US Spot Bitcoin & Ethereum ETF Flows",
-  "description": "Daily net flows for US spot Bitcoin and Ethereum ETFs (IBIT, FBTC, GBTC, ETHA): summaries, ranges, per-fund history.",
+  "description": "Daily net flows for US spot Bitcoin & Ethereum ETFs (IBIT, FBTC, GBTC, ETHA) with per-fund history",
   "version": "1.1.0",
   "websiteUrl": "https://yasinozen.com/etf-flows/mcp-server/",
   "repository": {
