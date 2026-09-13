@@ -1,4 +1,4 @@
-# Smithery Configuration File for Free Spot ETF Flows MCP Server
+# Smithery configuration. A no-install remote endpoint is also available: https://yasinozen.com/etf-flows/mcp
 startCommand:
   type: stdio
   config:
@@ -14,4 +14,4 @@ startCommand:
     properties:
       ETF_FLOWS_API_KEY:
         type: string
-        description: Your Pro API Key for unrestricted real-time ETF flow queries.
+        description: Optional free or Pro API key (https://yasinozen.com/etf-flows/get-api-key/).

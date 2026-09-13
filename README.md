@@ -1,96 +1,88 @@
-# Free Spot ETF Flows MCP Server
+# ETF Flows MCP Server — Spot Bitcoin & Ethereum ETF Flows for AI Assistants
 
-[![API Status](https://img.shields.io/badge/API-Active%20%26%20Live-10b981?style=for-the-badge&logo=supabase)](https://yasinozen35.github.io/free-etf-flows-mcp/)
-[![MCP Support](https://img.shields.io/badge/MCP-Native%20Support-6366f1?style=for-the-badge&logo=python)](https://github.com/yasinozen35/free-etf-flows-mcp)
-[![OpenAPI Spec](https://img.shields.io/badge/OpenAPI-3.0-06b6d4?style=for-the-badge&logo=openapi-initiative)](openapi.json)
+[![Website](https://img.shields.io/badge/Website-yasinozen.com%2Fetf--flows-3b5bfd?style=for-the-badge)](https://yasinozen.com/etf-flows/)
+[![Remote MCP](https://img.shields.io/badge/MCP-Remote%20%2B%20stdio-10b981?style=for-the-badge)](https://yasinozen.com/etf-flows/mcp-server/)
+[![OpenAPI](https://img.shields.io/badge/OpenAPI-3.1-06b6d4?style=for-the-badge&logo=openapi-initiative)](https://yasinozen.com/etf-flows/openapi.json)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-🌐 **Live Documentation & Website:** [https://yasinozen35.github.io/free-etf-flows-mcp/](https://yasinozen35.github.io/free-etf-flows-mcp/)  
-📄 **OpenAPI 3.0 Specification:** [openapi.json](openapi.json)  
-📦 **Smithery MCP Registry:** [https://smithery.ai/servers/yasinozen35/free-etf-flows-mcp](https://smithery.ai/servers/yasinozen35/free-etf-flows-mcp)  
-🦎 **Glama MCP Registry:** [https://glama.ai/mcp/servers/yasinozen35/free-etf-flows-mcp](https://glama.ai/mcp/servers/yasinozen35/free-etf-flows-mcp)
+Give Claude, ChatGPT, Cursor, VS Code or any MCP client **daily net flows for every US spot Bitcoin and Ethereum ETF** — IBIT, FBTC, GBTC, ARKB, ETHA, FETH, ETHE and more.
 
-This is an open-source Model Context Protocol (MCP) server that connects your AI assistants (like Claude Desktop, Cursor, Windsurf) to Spot Bitcoin (BTC) and Ethereum (ETH) institutional net flow data. 
-
-It fetches clean, normalized data directly from the consolidated institutional data feeds, bypassing messy scrape formats.
+- 🌐 **Live data pages:** [Bitcoin ETF flows today](https://yasinozen.com/etf-flows/bitcoin/) · [Ethereum ETF flows today](https://yasinozen.com/etf-flows/ethereum/) · [IBIT flows](https://yasinozen.com/etf-flows/bitcoin/ibit/)
+- 🔌 **Remote MCP server (no install):** `https://yasinozen.com/etf-flows/mcp`
+- 📄 **REST API docs:** [yasinozen.com/etf-flows/api](https://yasinozen.com/etf-flows/api/)
 
 ---
 
-## ✨ Features
+## Quick start: remote server (recommended)
 
-- **Native AI Integration:** Adds `get_latest_etf_flows` and `query_etf_flows_by_date_range` tools to your LLM context.
-- **Normalized Values:** Institutional formatting (like brackets for negative values `(219.4)`) are automatically converted to standard USD floats (`-219400000.00`).
-- **Free/Preview Fallback:** Works out-of-the-box without an API key in **Limited Preview Mode** (returns 3 latest records with a 1-day delay).
-- **Pro Tier support:** Full, real-time historical queries with higher rate limits when configured with an API key.
+**Claude** → Settings → Connectors → *Add custom connector* → `https://yasinozen.com/etf-flows/mcp`
 
----
-
-## 🚀 Setup Instructions
-
-### Prerequisites
-You need [uv](https://astral.sh/uv/) installed on your machine to run this server easily without managing virtual environments manually.
+**Claude Code**
 
 ```bash
-# Install uv (Mac/Linux)
-curl -LsSf https://astral.sh/uv/install.sh | sh
+claude mcp add --transport http etf-flows https://yasinozen.com/etf-flows/mcp
 ```
 
-### 1. Configure Claude Desktop
-Add the following block to your `claude_desktop_config.json` (located at `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+**Cursor / Windsurf / VS Code** (`mcp.json`)
+
+```json
+{
+  "mcpServers": {
+    "etf-flows": {
+      "url": "https://yasinozen.com/etf-flows/mcp",
+      "headers": { "X-API-Key": "YOUR_KEY" }
+    }
+  }
+}
+```
+
+The key is optional. Clients that cannot send headers can use `https://yasinozen.com/etf-flows/mcp?api_key=YOUR_KEY`.
+One-click install links for Cursor and VS Code are on the [setup page](https://yasinozen.com/etf-flows/mcp-server/).
+
+## Tools
+
+| Tool | Description |
+|---|---|
+| `get_etf_flow_summary` | Latest day, 7/30-day, month-to-date, YTD and cumulative flows, streaks and top funds (remote server) |
+| `get_latest_etf_flows` | Daily totals for the most recent trading days, optional per-fund breakdown |
+| `get_etf_flows_by_date_range` / `query_etf_flows_by_date_range` | Daily totals between two dates |
+| `get_fund_flows` | Daily flows and cumulative total for one ETF (e.g. IBIT) |
+| `get_pro_access_info` | Plans and how to get a key |
+
+Example prompts: *“Summarize spot Bitcoin ETF flows this week”*, *“Did IBIT have outflows in the last 10 days?”*, *“Compare Ethereum ETF flows in August and September.”*
+
+## Run locally (stdio)
+
+Requires [uv](https://astral.sh/uv/).
 
 ```json
 {
   "mcpServers": {
     "etf-flows": {
       "command": "uv",
-      "args": [
-        "--directory",
-        "/absolute/path/to/free-etf-flows-mcp",
-        "run",
-        "python",
-        "mcp_server.py"
-      ],
-      "env": {
-        "ETF_FLOWS_API_KEY": "YOUR_PRO_API_KEY_HERE"
-      }
+      "args": ["--directory", "/absolute/path/to/free-etf-flows-mcp", "run", "python", "mcp_server.py"],
+      "env": { "ETF_FLOWS_API_KEY": "YOUR_KEY" }
     }
   }
 }
 ```
-*Note: If you don't have an API key yet, you can leave the `ETF_FLOWS_API_KEY` empty (or omit it) to run in **Free Preview Mode**.*
 
-### 2. Configure Cursor
-1. Open Cursor Settings (**Settings > Features > MCP**).
-2. Click **+ Add New MCP Server**.
-3. Fill in the details:
-   - **Name:** `etf-flows`
-   - **Type:** `command`
-   - **Command:** `uv --directory /absolute/path/to/free-etf-flows-mcp run python mcp_server.py`
-4. Set the environment variable in your terminal/system or configure it directly in Cursor:
-   - Key: `ETF_FLOWS_API_KEY`
-   - Value: `YOUR_PRO_API_KEY_HERE`
+## Plans
 
----
+| | Preview (no key) | Free key | Pro ($9.99/mo) |
+|---|---|---|---|
+| History | 7 trading days | 90 trading days | Full, since Jan 2024 |
+| Delay | 1 day | 1 day | Same day |
+| Per-fund data | – | ✓ | ✓ |
+| CSV export | – | – | ✓ |
+| Rate limit | 10/min | 30/min | 120/min |
 
-## 🛠️ MCP Tools Provided
+👉 [Get a free key](https://yasinozen.com/etf-flows/get-api-key/) · [Upgrade to Pro](https://www.shopier.com/ysnzn/49360250)
 
-Once connected, your AI assistant will have access to the following tools:
+## Data
 
-### 1. `get_latest_etf_flows`
-*   **Description:** Get the most recent Spot ETF flow records for a given ticker.
-*   **Arguments:**
-    *   `ticker` (string, optional): `'BTC'` or `'ETH'`. Defaults to `'BTC'`.
-
-### 2. `query_etf_flows_by_date_range`
-*   **Description:** Query historical ETF flows within a specific date range.
-*   **Arguments:**
-    *   `start_date` (string, required): YYYY-MM-DD format.
-    *   `end_date` (string, required): YYYY-MM-DD format.
-    *   `ticker` (string, optional): `'BTC'` or `'ETH'`.
+Daily figures are sourced from the public ETF flow tables of [Farside Investors](https://farside.co.uk/) and normalized to US dollars (parenthesized values become negative). See the [methodology](https://yasinozen.com/etf-flows/methodology/). This project is independent and not affiliated with Farside Investors or any ETF issuer. Not investment advice.
 
 ---
 
-## 💳 Get a Pro API Key
-To unlock unlimited historical data, real-time updates (0-day delay), and higher rate limits, purchase a Pro Developer key from our website:
-
-👉 **[Get Pro API Key](https://www.shopier.com/ysnzn/49360250)** or visit our website **[https://yasinozen35.github.io/free-etf-flows-mcp/](https://yasinozen35.github.io/free-etf-flows-mcp/)**.
+Built by [Yasin Özen](https://yasinozen.com/) · <!-- mcp-name: com.yasinozen/etf-flows -->

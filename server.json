@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.yasinozen/etf-flows",
+  "title": "US Spot Bitcoin & Ethereum ETF Flows",
+  "description": "Daily net flows for US spot Bitcoin and Ethereum ETFs (IBIT, FBTC, GBTC, ETHA): summaries, ranges, per-fund history.",
+  "version": "1.1.0",
+  "websiteUrl": "https://yasinozen.com/etf-flows/mcp-server/",
+  "repository": {
+    "url": "https://github.com/yasinozen35/free-etf-flows-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://yasinozen.com/etf-flows/mcp",
+      "headers": [
+        {
+          "name": "X-API-Key",
+          "description": "Optional free or Pro API key from https://yasinozen.com/etf-flows/get-api-key/",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
